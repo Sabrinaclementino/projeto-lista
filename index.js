@@ -1,21 +1,26 @@
-const form = document.querySelector("#todo-list")
-const taskTitleInput = document.querySelector("#task-title-input")
+const form = document.querySelector("#todo-list");
+const taskTitleInput = document.querySelector("#task-title-input");
 
-tasks = []
+let tasks = [];
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
-const taskTitle = taskTitleInput.value
+  const taskTitle = taskTitleInput.value;
 
-tasks.push({
-  title: taskTitle,
-  done: false,
-})
+  if (taskTitle.length < 3) {
+    alert("Sua tarefa precisa ter, pelo menos, 3 caracteres!");
+    return;
+  }
 
-localStorage.setItem("tasks", JSON.stringify(tasks))
+  tasks.push({
+    title: taskTitle,
+    done: false,
+  });
 
-taskTitleInput.value = ""
-})
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 
-//Peguei elementos para add eventos a eles, pegar seus valores, criar obj e coloca-lo no array e no localStorage, limpar input após atualizacao da pagina
+  renderTaskOnHTML(taskTitle);
+
+  taskTitleInput.value = "";
+});
