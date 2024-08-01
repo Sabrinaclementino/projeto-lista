@@ -50,6 +50,17 @@ function renderTaskOnHTML(taskTitle, done = false) {
     });
     localStorage.setItem("tasks", JSON.stringify(tasks));
   });
+
+  button.addEventListener("click", (event) => {
+    const liToRemove = event.target.parentElement
+    const titleToRemove = liToRemove.querySelector("span").textContent
+
+    tasks = tasks.filter((t) => t.title !== titleToRemove)
+
+    todoListUl.removeChild(liToRemove)
+
+    localStorage.setItem("tasks", JSON.stringify(tasks))
+  })
 }
 
 form.addEventListener("submit", (event) => {
