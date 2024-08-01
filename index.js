@@ -52,16 +52,28 @@ function renderTaskOnHTML(taskTitle, done = false) {
   });
 
   button.addEventListener("click", (event) => {
-    const liToRemove = event.target.parentElement
-    const titleToRemove = liToRemove.querySelector("span").textContent
+    const liToRemove = event.target.parentElement;
+    const titleToRemove = liToRemove.querySelector("span").textContent;
 
-    tasks = tasks.filter((t) => t.title !== titleToRemove)
+    tasks = tasks.filter((t) => t.title !== titleToRemove);
 
-    todoListUl.removeChild(liToRemove)
+    todoListUl.removeChild(liToRemove);
 
-    localStorage.setItem("tasks", JSON.stringify(tasks))
-  })
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  });
 }
+
+window.onload = () => {
+  const tasksOnLocalStorage = localStorage.getItem("tasks");
+
+  if (!tasksOnLocalStorage) return;
+
+  tasks = JSON.parse(tasksOnLocalStorage);
+
+  tasks.forEach((t) => {
+    renderTaskOnHTML(t.title, t.done);
+  });
+};
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
